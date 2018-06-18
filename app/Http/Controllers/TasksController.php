@@ -16,8 +16,14 @@ class TasksController extends Controller
     {
        $data = [];
         if (\Auth::check()) {
-           $tasks = Task::all();
-
+        $user=\Auth::user();
+        $tasks = $user->tasks()->paginate(10);
+        
+        $data = [
+            'user' => $user,
+            'task' => $tasks,
+            ];
+            
         return view('tasks.index', [
             'tasks' => $tasks,
         ]);
@@ -108,12 +114,11 @@ class TasksController extends Controller
             'status' => 'required|max:10',   // add
             'content' => 'required|max:191',
         ]);
-        
+
         $task = Task::find($id);
+        $task->status = $request->status; 
         $task->content = $request->content;
-        $task->status = $request->status;
         $task->save();
-        
 
         return redirect('/');
 
