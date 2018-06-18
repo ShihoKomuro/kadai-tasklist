@@ -79,26 +79,36 @@ class TasksController extends Controller
     {
          $task = Task::find($id);
 
+    if (\Auth::id() === $task->user_id) {
         return view('tasks.show', [
             'task' => $task,
         ]);
 
+    }else{
+        return redirect('/');
     }
-
+    
+    }
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+     
     public function edit($id)
     {
         $task = Task::find($id);
 
+    if (\Auth::id() === $task->user_id) {
         return view('tasks.edit', [
             'task' => $task,
         ]);
+        
+    }else{
+        return redirect('/');
 
+    }
     }
 
     /**
