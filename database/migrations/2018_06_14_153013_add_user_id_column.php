@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddUserIdColumn1 extends Migration
+class AddUserIdColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -15,6 +15,8 @@ class AddUserIdColumn1 extends Migration
     {
         Schema::table('tasks', function (Blueprint $table) {
             $table->integer('user_id')->unsigned()->index();
+            
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
